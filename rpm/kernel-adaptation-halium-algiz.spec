@@ -59,7 +59,7 @@
 %define deviceinfo_flash_offset_second 0x00000000
 %define deviceinfo_flash_offset_tags 0x47c80000
 %define deviceinfo_flash_offset_dtb 0x47c80000
-%define deviceinfo_kernel_cmdline bootopt=64S3,32N2,64N2 systempart=/dev/mapper/system
+%define deviceinfo_kernel_cmdline bootopt=64S3,32N2,64N2 systempart=/dev/mapper/system binder.global_pid_lookups=0
 %define deviceinfo_bootimg_os_version 13
 %define deviceinfo_bootimg_os_patch_level 2024-07
 %define deviceinfo_bootimg_header_version 2
