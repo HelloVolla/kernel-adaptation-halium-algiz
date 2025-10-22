@@ -57,7 +57,6 @@ BuildRequires:  kmod >= 9
 BuildRequires:  flex
 BuildRequires:  bison
 BuildRequires:  bc
-BuildRequires:  python
 BuildRequires:  python3-base
 BuildRequires:  openssl
 #!BuildIgnore:  rpmlint-mini
@@ -141,7 +140,7 @@ if [ "%{deviceinfo_bootimg_header_version}" -eq 2 ]; then
     EXTRA_ARGS+=" --dtb $DTB --dtb_offset %{deviceinfo_flash_offset_dtb}"
 fi
 
-python ./kernel-adaptation-simplified/mkbootimg.py --kernel "$KERNEL" --ramdisk "$RAMDISK" --cmdline "%{deviceinfo_kernel_cmdline}" --header_version %{deviceinfo_bootimg_header_version} -o "$OUT" --os_version %{deviceinfo_bootimg_os_version} --os_patch_level %{deviceinfo_bootimg_os_patch_level} $EXTRA_ARGS
+mkbootimg.py --kernel "$KERNEL" --ramdisk "$RAMDISK" --cmdline "%{deviceinfo_kernel_cmdline}" --header_version %{deviceinfo_bootimg_header_version} -o "$OUT" --os_version %{deviceinfo_bootimg_os_version} --os_patch_level %{deviceinfo_bootimg_os_patch_level} $EXTRA_ARGS
 
 if [ -n "%{deviceinfo_bootimg_partition_size}" ]; then
     EXTRA_ARGS=""
@@ -259,6 +258,6 @@ find %{buildroot} ! \( -type d \) | sed -e s,"%{buildroot}",,g> %{_tmpdir}/kerne
 # installation is done when we flash device.
 if [ $1 -ne 1 ] ; then
     add-preinit-oneshot /var/lib/platform-updates/flash-bootimg.sh || :
-    fi
+fi
 
 %files -f %{_tmpdir}/kernel-adaptation.files
