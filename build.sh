@@ -32,9 +32,9 @@ export GCC_PATH=$ANDRDOID_BUILD_TOOLS_PATH/aarch64-linux-android-4.9/bin
 export GCC_ARM32_PATH=$ANDRDOID_BUILD_TOOLS_PATH/arm-linux-androideabi-4.9/bin
 export AVB_PATH=$ANDRDOID_BUILD_TOOLS_PATH/avb
 export MKBOOTIMG_PATH=$ANDRDOID_BUILD_TOOLS_PATH/android_system_tools_mkbootimg
+export PYTHON2_PATH=$ANDRDOID_BUILD_TOOLS_PATH/2.7.5/bin
 
-export PATH=$CLANG_PATH:$BUILD_TOOLS_BIN:$KERNEL_BUILD_TOOLS_BIN:$GCC_PATH:$GCC_ARM32_PATH:$AVB_PATH:$MKBOOTIMG_PATH:$PATH
-
+export PATH=$CLANG_PATH:$BUILD_TOOLS_BIN:$KERNEL_BUILD_TOOLS_BIN:$GCC_PATH:$GCC_ARM32_PATH:$AVB_PATH:$MKBOOTIMG_PATH:$PYTHON2_PATH:$PATH
 
 #Build the RPM
 rpmbuild --build-in-place --bb rpm/kernel-adaptation-halium-algiz.spec --buildroot=$PWD/buildroot
