@@ -43,8 +43,6 @@
 # Apply Patches
 %define apply_patches 1
 
-%define ramdisk ramdisk-algiz.img
-
 ##define build_dtboimg 1
 
 # Build and pick-up the following devicetrees
