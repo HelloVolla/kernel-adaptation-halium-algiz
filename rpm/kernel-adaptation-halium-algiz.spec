@@ -68,7 +68,7 @@
 %define deviceinfo_bootimg_qcdt false
 %define deviceinfo_bootimg_append_vbmeta false
 
-Version:        4.19.191
-Release:        2
+Version:        4.19.325
+Release:        1
 
 %include kernel-adaptation-simplified/kernel-adaptation-simplified.inc
