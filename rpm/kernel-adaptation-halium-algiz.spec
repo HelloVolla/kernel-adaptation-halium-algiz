@@ -32,7 +32,7 @@
 %define defconfig %{extra_config} halium.config
 
 # Linux kernel source directory
-%define source_directory linux/
+%define source_directory linux
 
 # Build modules
 %define build_modules 1
@@ -44,6 +44,7 @@
 %define apply_patches 1
 
 %define ramdisk ramdisk-algiz.img
+
 ##define build_dtboimg 1
 
 # Build and pick-up the following devicetrees

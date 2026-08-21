@@ -1,3 +1,7 @@
 [submodule "linux"]
 	path = linux
-	url = https://gitlab.com/ubports/porting/reference-device-ports/halium13/volla-phone-quintus/kernel-volla-mt6877.git
+	url = https://gitlab.com/ubports/porting/reference-device-ports/halium13/volla-phone-quintus/kernel-volla-mt6877
+	branch = halium-13.0
+[submodule "kernel-adaptation-simplified"]
+	url = https://github.com/HelloVolla/kernel-adaptation-simplified.git
+	path = kernel-adaptation-simplified

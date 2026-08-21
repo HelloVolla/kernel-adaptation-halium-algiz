@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s nullglob
 cd $1
 for f in ../patches/*.patch
 do
