@@ -5,3 +5,6 @@
 [submodule "kernel-adaptation-simplified"]
 	url = https://github.com/HelloVolla/kernel-adaptation-simplified.git
 	path = kernel-adaptation-simplified
+[submodule "tools/droidboot_map_to_dm"]
+	path = tools/droidboot_map_to_dm
+	url = https://github.com/Android-Boot-Manager/droidboot_map_to_dm.git

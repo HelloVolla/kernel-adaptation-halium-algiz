@@ -1,0 +1,49 @@
+--- halium.orig	2026-08-23 01:19:32.404312989 +0700
++++ /tmp/claude-1000/-media-storage-UBPorts-Volla-sailfishos/467f821e-77fc-4497-a951-5ac535c914ed/scratchpad/ovl/scripts/halium	2026-08-23 01:18:35.425299273 +0700
+@@ -438,6 +438,37 @@
+ 	cd -
+ }
+ 
++abm_map_partitions() {
++	grep -q 'systempart=/dev/mapper/sfos-system' /proc/cmdline || return 0
++	tell_kmsg "ABM boot: mapping sfos partitions from block maps"
++	udevadm settle 2>/dev/null || true
++	n=0
++	while [ ! -e /dev/disk/by-partlabel/metadata ] && [ $n -lt 20 ]; do sleep 0.5; n=$((n+1)); done
++	[ -e /dev/disk/by-partlabel/metadata ] || { tell_kmsg "ABM boot: metadata partition not found"; return 1; }
++	# Recreate the Android-style by-name symlinks the uncrypt block maps reference
++	mkdir -p /dev/block/by-name
++	for _p in /dev/disk/by-partlabel/*; do
++		[ -e "$_p" ] && ln -sf "$_p" /dev/block/by-name/"$(basename "$_p")"
++	done
++	mkdir -p /metadata /abm_config
++	mount /dev/disk/by-partlabel/metadata /metadata
++	droidboot_map_to_dm /metadata/abm_settings.map /tmp/abm_cfg_table.txt
++	dmsetup create abm-config < /tmp/abm_cfg_table.txt
++	umount /metadata
++	mount -o ro /dev/mapper/abm-config /abm_config
++	droidboot_map_to_dm /abm_config/sfos_system.map /tmp/sfos_system_table.txt
++	droidboot_map_to_dm /abm_config/sfos_data.map /tmp/sfos_data_table.txt
++	dmsetup create sfos-system < /tmp/sfos_system_table.txt
++	dmsetup create sfos-data < /tmp/sfos_data_table.txt
++	umount /abm_config
++	dmsetup remove abm-config
++	# Grow the shrunken rootfs to fill its mapped container (no-op once at full size).
++	# The ABM app install env lacks resize2fs, so it is done here where the initrd ships it.
++	e2fsck -pf /dev/mapper/sfos-system >/dev/null 2>&1 || true
++	resize2fs -f /dev/mapper/sfos-system >/dev/null 2>&1 || true
++	tell_kmsg "ABM boot: sfos-system and sfos-data mapped"
++}
++
+ mountroot() {
+ 	# list of possible userdata partition names
+ 	partlist="userdata UDA DATAFS USERDATA"
+@@ -448,6 +479,8 @@
+ 	run_scripts /scripts/local-premount
+ 	[ "$quiet" != "y" ] && log_end_msg
+ 
++	abm_map_partitions
++
+ 	# Put all of this script's output into /dev/kmsg
+ 	exec &>/dev/kmsg
+ 
