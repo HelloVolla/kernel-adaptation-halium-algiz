@@ -45,7 +45,7 @@
 
 %define ramdisk ramdisk-algiz.img
 
-##define build_dtboimg 1
+%define build_dtboimg 1
 
 # Build and pick-up the following devicetrees
 ##define devicetrees
@@ -68,6 +68,7 @@
 %define deviceinfo_rootfs_image_sector_size 4096
 %define deviceinfo_bootimg_qcdt false
 %define deviceinfo_bootimg_append_vbmeta false
+%define deviceinfo_dtbo mediatek/zahedan.dtbo
 
 Version:        4.19.325
 Release:        2
